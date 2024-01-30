@@ -1,0 +1,429 @@
+  - title: Weather
+    path: weather
+    icon: mdi:umbrella-outline
+    theme: waves
+    badges: []
+    cards:
+      - type: custom:mini-graph-card
+        name: Rain
+        hours_to_show: 24
+        points_per_hour: 4
+        decimals: 1
+        entities:
+          - entity: sensor.gw2000b_rain_rate_piezo
+            name: Rain
+            show_state: false
+            state_adaptive_color: true
+          - entity: sensor.gw2000b_daily_rain_rate_piezo
+            name: Rain
+            show_state: true
+            show_graph: false
+            state_adaptive_color: true
+        show:
+          labels: true
+          icon: false
+          state: true
+          graph: bar
+      - type: custom:mini-graph-card
+        name: Winds
+        icon: mdi:weather-windy
+        hours_to_show: 24
+        points_per_hour: 15
+        line_width: 2
+        decimals: 1
+        entities:
+          - entity: sensor.gw2000b_wind_gust
+            name: Gust
+            show_state: true
+            state_adaptive_color: true
+          - entity: sensor.gw2000b_wind_speed
+            name: Speed
+            color: '#c47910'
+            show_state: true
+            state_adaptive_color: true
+        show:
+          labels: true
+          icon: true
+          state: true
+          extrema: true
+          points: false
+      - type: custom:mushroom-template-card
+        primary: >-
+          {% set direction = ['NORTH','NORTH-NORTHEAST','NORTHEAST','EAST
+          NORTHEAST','EAST','EAST SOUTHEST','SOUTHEAST','SOUTH
+          SOUTHEAST','SOUTH','SOUTH SOUTHWEST','SOUTHWEST','WEST
+          SOUTHWEST','WEST','WEST NORTHWEST','NORTHWEST','NORTH
+          NORTHWEST','NORTH'] %}
+
+          {% set degree = states(entity)|float %}
+
+          Wind - {{ direction[((degree+11.25)/22.5)|int] }}
+        secondary: '{{states("sensor.gw2000b_wind_speed")}} km/h'
+        icon: mdi:compass-rose
+        icon_color: teal
+        entity: sensor.gw2000b_wind_direction
+        badge_color: ''
+        fill_container: true
+      - type: custom:windrose-card
+        title: Historic Wind Direction - 48 hrs
+        data_period:
+          hours_to_show: 48
+        max_width: 400
+        refresh_interval: 60
+        windspeed_bar_location: bottom
+        windspeed_bar_full: true
+        wind_direction_entity:
+          entity: sensor.gw2000b_wind_direction
+          direction_unit: degrees
+          use_statistics: false
+          direction_compensation: 0
+        windspeed_entities:
+          - entity: sensor.gw2000b_wind_speed
+            name: ''
+            speed_unit: kph
+            use_statistics: false
+        output_speed_unit: kph
+        speed_range_beaufort: false
+        windrose_draw_north_offset: 0
+        cardinal_direction_letters: NESW
+        matching_strategy: direction-first
+        center_calm_percentage: true
+      - type: custom:mini-graph-card
+        name: Pressure
+        hours_to_show: 24
+        points_per_hour: 15
+        line_width: 2
+        decimals: 0
+        entities:
+          - entity: sensor.gw2000b_relative_pressure
+            show_state: true
+            state_adaptive_color: true
+        show:
+          labels: true
+          icon: true
+          state: true
+          points: false
+      - type: custom:mini-graph-card
+        name: Outdoor
+        hours_to_show: 24
+        points_per_hour: 15
+        line_width: 2
+        decimals: 1
+        entities:
+          - entity: sensor.gw2000b_outdoor_temperature
+            name: Temperature
+            show_state: true
+            state_adaptive_color: true
+          - color: blue
+            entity: sensor.gw2000b_humidity
+            name: Humidity
+            y_axis: secondary
+            show_state: true
+            state_adaptive_color: true
+        show:
+          labels: true
+          labels_secondary: true
+          icon: false
+          state: true
+          extrema: true
+          points: false
+      - type: custom:bar-card
+        entities:
+          - entity: sensor.bathroom_enviroment_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Bathroom
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.temperature_humidity_sensor_ec69_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Bedroom
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.gw2000b_indoor_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Bench
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.crawl_space_temperture_humidity_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Crawlspace
+            target: 20
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.extension_crawl_space_temperature_humidity_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Extension Crawlspace
+            target: 20
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.temperature_humidity_sensor_8d03_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Fridge
+            target: 4
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.garage_temp_sensor_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Garage
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.kid_room_temperature_and_humidity_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Kid Room
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.temperature_humidity_sensor_3a7b_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Livingroom
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.office_temp_and_humidity_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Office
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+          - entity: sensor.gw2000b_outdoor_temperature
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Outdoor
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
+            entity_row: true
+        positions:
+          icon: 'off'
+          indicator: inside
+        style: |-
+          bar-card-name {
+            font-size: 20px;
+          }
+          bar-card-value {
+            font-size: 20px;
+          }
+                    
+
+            
+      - type: custom:mini-graph-card
+        name: Solar Irradiance
+        hours_to_show: 48
+        points_per_hour: 15
+        line_width: 2
+        decimals: 1
+        entities:
+          - entity: sensor.gw2000b_solar_radiation
+            name: Solar
+            color: yellow
+            show_state: true
+            state_adaptive_color: true
+        show:
+          labels: true
+          labels_secondary: true
+          icon: false
+          state: true
+          points: false
+          extrema: true
+      - type: picture-entity
+        show_state: false
+        show_name: false
+        camera_view: auto
+        entity: camera.--REDACTED--_tides_long_plot_picture
+        name: --REDACTED-- Tides
+      - type: custom:horizon-card
+        use12hourClock: false
+        fields:
+          azimuth: true
+          elevation: true
+      - type: custom:weather-radar-card
+        data_source: RainViewer-Rainbow
+        zoom_level: 8
+        square_map: true
+        show_recenter: true
+        extra_labels: true
+        show_range: false
+        show_playback: false
+        show_zoom: true
+        show_marker: true
+        show_scale: false
+        static_map: true
+        map_style: Satellite
