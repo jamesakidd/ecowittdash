@@ -88,6 +88,8 @@
         cardinal_direction_letters: NESW
         matching_strategy: direction-first
         center_calm_percentage: true
+        current_direction:
+          show_arrow: true
       - type: custom:mini-graph-card
         name: Pressure
         hours_to_show: 24
@@ -173,28 +175,6 @@
                 from: 26
                 to: 40
             entity_row: true
-          - entity: sensor.gw2000b_indoor_temperature
-            decimal: 1
-            height: 30px
-            icon: none
-            min: -20
-            max: 40
-            name: Bench
-            target: 22
-            severity:
-              - color: '#1419b3'
-                from: -20
-                to: 5
-              - color: '#0c8fb3'
-                from: 6
-                to: 15
-              - color: '#3b9e09'
-                from: 16
-                to: 25
-              - color: '#d60427'
-                from: 26
-                to: 40
-            entity_row: true
           - entity: sensor.crawl_space_temperture_humidity_temperature
             decimal: 1
             height: 30px
@@ -202,28 +182,6 @@
             min: -20
             max: 40
             name: Crawlspace
-            target: 20
-            severity:
-              - color: '#1419b3'
-                from: -20
-                to: 5
-              - color: '#0c8fb3'
-                from: 6
-                to: 15
-              - color: '#3b9e09'
-                from: 16
-                to: 25
-              - color: '#d60427'
-                from: 26
-                to: 40
-            entity_row: true
-          - entity: sensor.extension_crawl_space_temperature_humidity_temperature
-            decimal: 1
-            height: 30px
-            icon: none
-            min: -20
-            max: 40
-            name: Extension Crawlspace
             target: 20
             severity:
               - color: '#1419b3'
@@ -250,15 +208,15 @@
             severity:
               - color: '#1419b3'
                 from: -20
-                to: 5
+                to: -5
               - color: '#0c8fb3'
-                from: 6
-                to: 15
+                from: -4
+                to: 0
               - color: '#3b9e09'
-                from: 16
-                to: 25
+                from: 1
+                to: 8
               - color: '#d60427'
-                from: 26
+                from: 15
                 to: 40
             entity_row: true
           - entity: sensor.garage_temp_sensor_temperature
@@ -305,7 +263,7 @@
                 from: 26
                 to: 40
             entity_row: true
-          - entity: sensor.temperature_humidity_sensor_3a7b_temperature
+          - entity: sensor.gw2000b_indoor_temperature
             decimal: 1
             height: 30px
             icon: none
@@ -371,6 +329,27 @@
                 from: 26
                 to: 40
             entity_row: true
+          - entity: sensor.main_area_avg_temps
+            decimal: 1
+            height: 30px
+            icon: none
+            min: -20
+            max: 40
+            name: Indoor Average
+            target: 22
+            severity:
+              - color: '#1419b3'
+                from: -20
+                to: 5
+              - color: '#0c8fb3'
+                from: 6
+                to: 15
+              - color: '#3b9e09'
+                from: 16
+                to: 25
+              - color: '#d60427'
+                from: 26
+                to: 40
         positions:
           icon: 'off'
           indicator: inside
@@ -403,12 +382,6 @@
           state: true
           points: false
           extrema: true
-      - type: picture-entity
-        show_state: false
-        show_name: false
-        camera_view: auto
-        entity: camera.--REDACTED--_tides_long_plot_picture
-        name: --REDACTED-- Tides
       - type: custom:horizon-card
         use12hourClock: false
         fields:
